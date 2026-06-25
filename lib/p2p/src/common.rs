@@ -10,31 +10,26 @@ use std::{
 
 use anyhow::Context;
 use arboard::Clipboard;
-use console::{Key, Term, style};
-use data_encoding::HEXLOWER;
+use console::style;
 use futures_buffered::BufferedStreamExt;
 use indicatif::{
     HumanBytes, HumanDuration, MultiProgress, ProgressBar, ProgressDrawTarget, ProgressStyle,
 };
 use iroh::{
-    Endpoint, NodeAddr, RelayMap, RelayMode, RelayUrl, SecretKey,
-    discovery::{dns::DnsDiscovery, pkarr::PkarrPublisher},
+    NodeAddr, RelayMap, RelayMode, RelayUrl, SecretKey,
 };
 use iroh_blobs::{
-    BlobFormat, Hash, HashAndFormat, TempTag,
+    BlobFormat, Hash, TempTag,
     format::collection::Collection,
     get::{
         db::DownloadProgress,
         fsm::{AtBlobHeaderNextError, DecodeError},
-        request::get_hash_seq_and_sizes,
     },
-    net_protocol::Blobs,
     provider::{self, CustomEventSender},
     store::{ExportMode, ImportMode, ImportProgress},
     ticket::BlobTicket,
 };
 use n0_future::{StreamExt, future::Boxed};
-use rand::Rng;
 use serde::{Deserialize, Serialize};
 use tokio::task::JoinHandle;
 use walkdir::WalkDir;

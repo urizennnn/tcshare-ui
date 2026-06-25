@@ -2,7 +2,7 @@
 
 use std::time::Duration;
 
-use console::{Key, Term, style};
+use console::{Key, Term};
 use data_encoding::HEXLOWER;
 use iroh::{Endpoint, protocol::Router};
 use iroh_blobs::{BlobFormat, net_protocol::Blobs, ticket::BlobTicket};

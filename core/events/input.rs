@@ -1,7 +1,7 @@
 use crate::core_mod::widgets::{Item, TableWidget};
 use crate::core_mod::{self, widgets};
 use crate::init::GLOBAL_RUNTIME;
-use crate::internal::forward_port::{forward_port_igd, get_local_ip};
+use crate::internal::forward_port::get_local_ip;
 use crate::internal::session_store;
 use crate::screens::debug::DebugScreen;
 use crate::screens::home::Home;
@@ -248,7 +248,7 @@ pub fn handle_enter_key(
                         let ip = get_local_ip().unwrap_or_else(|_e| "unknown".to_string());
                         let now = chrono::Utc::now().to_rfc3339();
                         let new_record = session_store::SessionRecord {
-                            name: hostname.clone(),
+                            name: hostname.expect("Failed to get hostname").clone(),
                             ip: ip.clone(),
                             last_transfer: "N/A".to_string(),
                             last_connection: now.clone(),
@@ -261,7 +261,7 @@ pub fn handle_enter_key(
                         prog.state = ConnectionState::Failed(format!("Error opening port: {}", e));
                     }
                 };
-                let hostname = whoami::username();
+                let hostname = whoami::username().expect("Failed to get hostname");
                 let ip = get_local_ip().unwrap_or_else(|_e| "unknown".to_string());
                 let now = chrono::Utc::now().to_rfc3339();
                 let new_device = crate::screens::session::Device {
@@ -331,7 +331,7 @@ pub fn handle_enter_key(
                     let ip = get_local_ip().unwrap_or_else(|_e| "unknown".to_string());
                     let now = chrono::Utc::now().to_rfc3339();
                     let new_record = session_store::SessionRecord {
-                        name: hostname.clone(),
+                        name: hostname.expect("Failed to get hostname").clone(),
                         ip: ip.clone(),
                         last_transfer: "N/A".to_string(),
                         last_connection: now.clone(),
@@ -344,7 +344,7 @@ pub fn handle_enter_key(
                     prog.state = ConnectionState::Failed(format!("Error connecting: {}", e));
                 }
             };
-            let hostname = whoami::username();
+            let hostname = whoami::username().expect("Failed to get hostname");
             let ip = get_local_ip().unwrap_or("unknown".to_string());
             let now = chrono::Utc::now().to_rfc3339();
             let new_device = crate::screens::session::Device {

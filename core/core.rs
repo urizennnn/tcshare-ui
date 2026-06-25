@@ -3,7 +3,7 @@ use std::any::type_name;
 use std::{collections::BTreeMap, error::Error, fs};
 
 use nanoid::nanoid;
-use rand::{Rng, rng};
+use rand::{RngExt, rng};
 
 use crate::config::app::app_config_variables::{App, Files};
 

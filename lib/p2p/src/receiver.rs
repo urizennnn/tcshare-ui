@@ -1,8 +1,6 @@
-use console::style;
-use data_encoding::HEXLOWER;
 use iroh::Endpoint;
 use iroh_blobs::{
-    BlobFormat, HashAndFormat,
+    HashAndFormat,
     get::{db::get_to_db, request::get_hash_seq_and_sizes},
     store::fs::Store,
 };

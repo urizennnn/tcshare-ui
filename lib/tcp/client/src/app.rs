@@ -1,9 +1,16 @@
-use once_cell::sync::Lazy;
 use std::error::Error;
 use tokio::{net::TcpListener, net::TcpStream};
 use whoami::username;
 
-pub static USER: Lazy<String> = Lazy::new(|| username().to_string());
+use std::sync::LazyLock;
+
+pub static USER: LazyLock<String> = LazyLock::new(|| match username() {
+    Ok(value) => value,
+    Err(e) => {
+        log::error!("Failed to get username: {}", e);
+        "unknown_user".to_string()
+    }
+});
 pub fn connect_sync(address: &str) -> Result<TcpStream, Box<dyn Error>> {
     let rt = tokio::runtime::Runtime::new()?;
     rt.block_on(async {
